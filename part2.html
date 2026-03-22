@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Anjali 💖 — Part 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Dancing+Script:wght@600;700&family=Noto+Sans+Devanagari:wght@300;400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rose:#e8336d;--deep:#b5174f;--blush:#ffd6e4;--gold:#f0c060;
+  --dark:#060008;--cream:#fff5f0;--petal:#ffb3cb;--wine:#1a0010;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:#fff;font-family:'Crimson Pro',serif;overflow-x:hidden;cursor:none}
+button{font-family:inherit}
+@media(hover:none){body{cursor:auto}button{cursor:pointer}#cursor,#cur-ring{display:none}}
+
+/* ─── CURSOR ─── */
+#cursor{position:fixed;width:10px;height:10px;background:var(--rose);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);mix-blend-mode:screen}
+#cur-ring{position:fixed;width:26px;height:26px;border:1.5px solid rgba(232,51,109,.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:left .1s,top .1s}
+
+/* ─── CANVASES ─── */
+#h-canvas,#cf-canvas{position:fixed;inset:0;pointer-events:none;z-index:9000}
+#cf-canvas{z-index:8500;display:none}
+
+/* ─── GRAIN ─── */
+.grain{position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;animation:gr 1s steps(2) infinite}
+@keyframes gr{0%{transform:translate(0,0)}50%{transform:translate(2px,-2px)}100%{transform:translate(-2px,2px)}}
+
+/* ─── NAV DOTS ─── */
+#nav{position:fixed;right:12px;top:50%;transform:translateY(-50%);z-index:500;display:flex;flex-direction:column;gap:8px}
+.nd{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.14);cursor:pointer;transition:all .3s;border:1px solid rgba(232,51,109,.2)}
+.nd.on{background:var(--rose);transform:scale(1.5)}
+@media(max-width:500px){#nav{display:none}}
+
+/* ─── SCENE BASE ─── */
+.sc{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden;padding:clamp(70px,9vh,100px) clamp(14px,4vw,40px)}
+.sc-lbl{font-size:.63rem;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;display:block;text-align:center}
+.sc-ttl{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.5rem,5vw,2.9rem);background:linear-gradient(135deg,#fff,var(--blush),var(--rose));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-bottom:clamp(24px,3.5vh,36px)}
+.rev{opacity:0;transform:translateY(34px);transition:opacity .9s ease,transform .9s ease}
+.rev.vis{opacity:1;transform:translateY(0)}
+
+/* ══════════════════════════════════
+   OPENING SCENE — PART 2 ARRIVAL
+══════════════════════════════════ */
+#sc-open{
+  background:radial-gradient(ellipse at center,#1a0010 0%,#000 70%);
+  min-height:100vh;text-align:center;gap:clamp(16px,3vh,26px);
+}
+.stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 15% 20%,rgba(255,255,255,.8) 0,transparent 100%),radial-gradient(1px 1px at 40% 50%,rgba(255,255,255,.5) 0,transparent 100%),radial-gradient(1.5px 1.5px at 70% 15%,rgba(255,200,200,.6) 0,transparent 100%),radial-gradient(1px 1px at 85% 70%,rgba(255,255,255,.7) 0,transparent 100%),radial-gradient(1px 1px at 25% 80%,rgba(255,180,200,.5) 0,transparent 100%),radial-gradient(1px 1px at 60% 90%,rgba(255,255,255,.4) 0,transparent 100%),radial-gradient(1px 1px at 5% 45%,rgba(255,255,255,.6) 0,transparent 100%),radial-gradient(1px 1px at 90% 30%,rgba(255,255,255,.5) 0,transparent 100%);animation:twk 3s infinite alternate;pointer-events:none}
+@keyframes twk{0%{opacity:.6}100%{opacity:1}}
+.op-tag{font-size:.65rem;letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,.3);opacity:0;animation:fup .8s .3s forwards}
+.op-title{font-family:'Dancing Script',cursive;font-size:clamp(3rem,12vw,7rem);line-height:1.1;background:linear-gradient(135deg,#fff,var(--blush),var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 30px rgba(232,51,109,.4));opacity:0;animation:fup 1.2s .8s forwards}
+.op-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(.9rem,2.5vw,1.2rem);color:var(--petal);opacity:0;animation:fup .9s 1.6s forwards;max-width:500px;text-align:center;line-height:1.8}
+.op-scroll{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fup .8s 2.6s forwards}
+.op-scroll span{font-size:.56rem;letter-spacing:5px;color:rgba(255,255,255,.24)}
+.scroll-line{width:1px;height:32px;background:linear-gradient(to bottom,var(--rose),transparent);animation:sl 1.5s infinite}
+@keyframes sl{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(.5);opacity:.3}}
+@keyframes fup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══════════════════════════════════
+   SCENE 1 — FAKE PHONE CALL
+══════════════════════════════════ */
+#sc-call{background:linear-gradient(180deg,#050008,#0d0010,#050008)}
+.phone-screen{
+  width:min(340px,92vw);
+  background:linear-gradient(180deg,#0a0015 0%,#050010 100%);
+  border-radius:44px;
+  border:2px solid rgba(232,51,109,.25);
+  padding:clamp(28px,5vh,44px) clamp(20px,4vw,32px);
+  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(232,51,109,.1),inset 0 0 30px rgba(232,51,109,.03);
+  display:flex;flex-direction:column;align-items:center;gap:clamp(14px,2.5vh,22px);
+  position:relative;
+}
+.phone-notch{width:100px;height:24px;background:#000;border-radius:0 0 16px 16px;position:absolute;top:0;left:50%;transform:translateX(-50%)}
+.call-status{font-size:.65rem;letter-spacing:4px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-top:8px}
+.call-avatar{width:clamp(70px,16vw,90px);height:clamp(70px,16vw,90px);border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--deep));display:flex;align-items:center;justify-content:center;font-size:clamp(2rem,5vw,2.8rem);box-shadow:0 0 0 6px rgba(232,51,109,.15),0 0 0 12px rgba(232,51,109,.07);animation:ring-pulse 1.5s infinite}
+@keyframes ring-pulse{0%,100%{box-shadow:0 0 0 6px rgba(232,51,109,.15),0 0 0 12px rgba(232,51,109,.07)}50%{box-shadow:0 0 0 10px rgba(232,51,109,.2),0 0 0 20px rgba(232,51,109,.05)}}
+.call-name{font-family:'Dancing Script',cursive;font-size:clamp(1.6rem,5vw,2.2rem);color:#fff;text-align:center}
+.call-sub{font-size:.78rem;color:rgba(255,255,255,.4);font-style:italic}
+.call-wave{display:flex;gap:4px;align-items:center;height:24px}
+.cw{width:3px;border-radius:3px;background:var(--rose);animation:wave var(--d,.8s) infinite alternate ease-in-out}
+@keyframes wave{from{height:4px;opacity:.4}to{height:20px;opacity:1}}
+.call-btns{display:flex;gap:clamp(32px,8vw,50px);margin-top:8px}
+.cb{width:clamp(54px,13vw,66px);height:clamp(54px,13vw,66px);border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:clamp(1.3rem,3.5vw,1.6rem);cursor:pointer;transition:transform .2s,box-shadow .2s;color:#fff}
+.cb.ans{background:linear-gradient(135deg,#25D366,#128C7E);box-shadow:0 6px 20px rgba(37,211,102,.4)}
+.cb.dec{background:linear-gradient(135deg,#ff4444,#cc0000);box-shadow:0 6px 20px rgba(255,68,68,.4)}
+.cb:hover,.cb:active{transform:scale(1.1)}
+.cb.ans:hover{box-shadow:0 10px 30px rgba(37,211,102,.6)}
+.cb.dec:hover{box-shadow:0 10px 30px rgba(255,68,68,.6)}
+/* After answer — message reveal */
+#call-msg{display:none;text-align:center;max-width:300px}
+.cm-typing{display:flex;gap:6px;justify-content:center;margin-bottom:16px}
+.ct-dot{width:8px;height:8px;border-radius:50%;background:var(--rose);animation:tdot .8s infinite}
+.ct-dot:nth-child(2){animation-delay:.16s}
+.ct-dot:nth-child(3){animation-delay:.32s}
+@keyframes tdot{0%,80%,100%{transform:scale(0);opacity:.4}40%{transform:scale(1);opacity:1}}
+.cm-text{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(.95rem,2.5vw,1.1rem);color:var(--cream);line-height:1.9;min-height:60px}
+.cm-heart{font-size:2.5rem;animation:beat 1.2s infinite;display:block;margin-top:8px}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+/* declined state */
+#call-declined{display:none;text-align:center;flex-direction:column;align-items:center;gap:12px}
+.cd-emoji{font-size:3rem}
+.cd-msg{font-family:'Playfair Display',serif;font-style:italic;color:var(--petal);font-size:clamp(.9rem,2.5vw,1.05rem);line-height:1.7}
+
+/* ══════════════════════════════════
+   SCENE 2 — SYRINGE CLICKER
+══════════════════════════════════ */
+#sc-syringe{background:linear-gradient(180deg,#050008,#080012,#050008)}
+.rx-label-top{background:rgba(15,61,46,.15);border:1px solid rgba(26,92,66,.3);border-radius:4px;padding:10px 20px;font-size:.72rem;letter-spacing:2px;color:#7ec8a0;text-align:center;max-width:380px}
+.syringe-wrap{position:relative;width:min(320px,88vw);cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.syringe-wrap:active{transform:scale(.98)}
+/* SVG syringe */
+#syringe-svg{width:100%;filter:drop-shadow(0 8px 24px rgba(232,51,109,.25));transition:filter .2s}
+.syringe-wrap:active #syringe-svg{filter:drop-shadow(0 4px 12px rgba(232,51,109,.4))}
+.syringe-progress{background:rgba(255,255,255,.06);border:1px solid rgba(232,51,109,.2);border-radius:50px;height:12px;width:min(280px,80vw);overflow:hidden;margin:0 auto}
+.sp-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--rose),var(--gold));border-radius:50px;transition:width .3s ease;box-shadow:0 0 10px rgba(232,51,109,.4)}
+.syringe-pct{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,2.4rem);font-weight:900;color:var(--rose);text-align:center;line-height:1}
+.syringe-status{font-size:clamp(.8rem,2.2vw,.95rem);color:var(--petal);font-style:italic;text-align:center;min-height:24px;transition:opacity .4s}
+.syringe-tap{font-size:.65rem;letter-spacing:3px;color:rgba(255,255,255,.3);text-transform:uppercase;text-align:center;animation:pulse-o 2s infinite}
+@keyframes pulse-o{0%,100%{opacity:.3}50%{opacity:.8}}
+/* Complete state */
+#syringe-done{display:none;text-align:center;flex-direction:column;align-items:center;gap:16px}
+.sd-stamp{font-size:clamp(2.5rem,8vw,4rem);animation:stampIn .6s ease}
+@keyframes stampIn{from{transform:scale(2);opacity:0}to{transform:scale(1);opacity:1}}
+.sd-title{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,4.5vw,2rem);background:linear-gradient(135deg,#fff,var(--blush),var(--rose));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sd-msg{font-size:clamp(.88rem,2.3vw,1.05rem);color:var(--petal);font-style:italic;max-width:420px;line-height:1.9;text-align:center}
+
+/* ══════════════════════════════════
+   SCENE 3 — FIND THE HEARTS
+══════════════════════════════════ */
+#sc-hearts{background:linear-gradient(180deg,#040007,#080010,#040007);position:relative}
+.heart-field{position:relative;width:100%;max-width:700px;min-height:clamp(340px,55vw,480px);border:1px solid rgba(232,51,109,.1);border-radius:8px;background:rgba(232,51,109,.02);margin:0 auto}
+.hf-instruction{font-size:clamp(.82rem,2.2vw,.96rem);color:var(--petal);font-style:italic;text-align:center;max-width:460px;line-height:1.7;margin-bottom:4px}
+.heart-counter{font-family:'Playfair Display',serif;font-size:clamp(1rem,2.8vw,1.3rem);color:var(--gold);text-align:center;transition:all .3s}
+.hh{position:absolute;font-size:clamp(.9rem,2.5vw,1.3rem);cursor:pointer;transition:transform .3s,opacity .3s;user-select:none;-webkit-tap-highlight-color:transparent;opacity:.25;filter:grayscale(.6)}
+.hh:hover{transform:scale(1.4);opacity:.7}
+.hh.found{animation:heartBloom .5s ease forwards;pointer-events:none}
+@keyframes heartBloom{0%{transform:scale(1);opacity:.25}50%{transform:scale(2.5);opacity:1}100%{transform:scale(1.2);opacity:1;filter:grayscale(0) drop-shadow(0 0 8px var(--rose))}}
+/* All found reveal */
+#hearts-done{display:none;text-align:center;flex-direction:column;align-items:center;gap:16px;padding:20px}
+.hd-quote{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1rem,3vw,1.35rem);color:var(--cream);line-height:1.9;max-width:500px}
+.hd-quote span{color:var(--gold)}
+
+/* ══════════════════════════════════
+   SCENE 4 — FLIP CARDS
+══════════════════════════════════ */
+#sc-flip{background:linear-gradient(180deg,#030006,#07000b,#030006)}
+.flip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(130px,26vw,170px),1fr));gap:clamp(12px,2.5vw,20px);max-width:760px;width:100%}
+.flip-card{height:clamp(150px,28vw,190px);perspective:1000px;cursor:pointer}
+.flip-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.4,0,.2,1)}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;inset:0;border-radius:8px;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;padding:14px}
+.flip-front{background:linear-gradient(135deg,rgba(30,0,20,.9),rgba(15,0,10,.95));border:1px solid rgba(232,51,109,.2);flex-direction:column;gap:8px}
+.ff-icon{font-size:clamp(1.6rem,4vw,2rem)}
+.ff-hint{font-size:.58rem;letter-spacing:2px;color:rgba(255,255,255,.3);text-transform:uppercase}
+.flip-back{background:linear-gradient(135deg,var(--rose),var(--deep));transform:rotateY(180deg);flex-direction:column;gap:8px;text-align:center;border:1px solid rgba(255,255,255,.1)}
+.fb-text{font-family:'Dancing Script',cursive;font-size:clamp(.88rem,2.2vw,1.05rem);color:#fff;line-height:1.5;text-align:center}
+.fb-num{font-size:.55rem;letter-spacing:2px;color:rgba(255,255,255,.4);text-transform:uppercase}
+/* All flipped message */
+#flip-done{display:none;text-align:center;max-width:500px;margin-top:24px;flex-direction:column;align-items:center;gap:14px;animation:fup .9s forwards}
+.fd-quote{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1rem,2.8vw,1.25rem);color:var(--cream);line-height:1.9}
+.fd-quote span{color:var(--gold)}
+
+/* ══════════════════════════════════
+   SCENE 5 — PERSONAL SHAYARIS
+══════════════════════════════════ */
+#sc-shayari{background:linear-gradient(180deg,#030006,#050009)}
+.psh-stage{max-width:660px;width:100%;display:flex;flex-direction:column;gap:clamp(24px,3.5vh,36px)}
+.psh-block{opacity:0;transform:translateY(36px);transition:all .9s ease}
+.psh-block.vis{opacity:1;transform:translateY(0)}
+.psh-card{background:linear-gradient(135deg,rgba(30,0,20,.75),rgba(7,0,5,.9));border:1px solid rgba(232,51,109,.22);border-radius:3px;padding:clamp(22px,4vw,36px) clamp(18px,5vw,42px);position:relative;overflow:hidden}
+.psh-card::before{content:'❝';font-size:4rem;color:var(--rose);opacity:.07;position:absolute;top:4px;left:13px;font-family:Georgia,serif;line-height:1}
+.psh-text{font-family:'Noto Sans Devanagari',serif;font-size:clamp(.88rem,2.3vw,1.1rem);line-height:2.2;color:var(--cream);text-align:center;position:relative;z-index:1;min-height:1.5em}
+.psh-text .name{color:var(--gold);font-weight:600;font-style:italic}
+.psh-ro{font-family:'Crimson Pro',serif;font-style:italic;font-size:clamp(.8rem,2vw,.96rem);color:var(--blush);text-align:center;margin-top:10px;line-height:1.9;position:relative;z-index:1;min-height:1em}
+.psh-ro .name{color:var(--gold)}
+.psh-hr{width:48px;height:1px;margin:12px auto 0;background:linear-gradient(90deg,transparent,var(--rose),transparent)}
+.psh-n{position:absolute;bottom:9px;right:14px;font-size:.56rem;letter-spacing:3px;color:rgba(255,255,255,.13)}
+
+/* ══════════════════════════════════
+   SCENE 6 — GRAND FINALE
+══════════════════════════════════ */
+#sc-finale{background:radial-gradient(ellipse at center,#1a0010 0%,#000 60%);text-align:center;gap:clamp(18px,3vh,28px)}
+.fin-stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 10% 15%,rgba(255,255,255,.8) 0,transparent 100%),radial-gradient(1.5px 1.5px at 45% 8%,rgba(255,200,200,.6) 0,transparent 100%),radial-gradient(1px 1px at 80% 40%,rgba(255,255,255,.7) 0,transparent 100%),radial-gradient(1px 1px at 25% 75%,rgba(255,255,255,.5) 0,transparent 100%),radial-gradient(1px 1px at 65% 85%,rgba(255,180,200,.5) 0,transparent 100%),radial-gradient(1px 1px at 90% 60%,rgba(255,255,255,.6) 0,transparent 100%);animation:twk 4s infinite alternate;pointer-events:none}
+.fin-heart{font-size:clamp(4rem,12vw,7rem);display:block;animation:beat 1.3s infinite;filter:drop-shadow(0 0 30px rgba(232,51,109,.6));cursor:pointer}
+.fin-title{font-family:'Dancing Script',cursive;font-size:clamp(2.5rem,10vw,6rem);line-height:1.1;background:linear-gradient(135deg,var(--petal),var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 36px rgba(232,51,109,.5))}
+.fin-shayari{font-family:'Noto Sans Devanagari',serif;font-size:clamp(.88rem,2.3vw,1.1rem);line-height:2.3;color:var(--cream);max-width:500px;text-align:center}
+.fin-shayari .name{color:var(--gold)}
+.fin-cert{background:rgba(232,51,109,.1);border:1px solid rgba(232,51,109,.28);border-radius:5px;padding:clamp(12px,2.5vw,18px) clamp(20px,4vw,32px);font-family:'Dancing Script',cursive;font-size:clamp(.96rem,2.4vw,1.2rem);color:var(--petal);text-align:center}
+.fin-cert small{display:block;font-size:clamp(.6rem,1.5vw,.7rem);opacity:.62;margin-top:4px}
+
+/* ─── UTIL ─── */
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cur-ring"></div>
+<canvas id="h-canvas"></canvas>
+<canvas id="cf-canvas"></canvas>
+
+<div id="nav">
+  <div class="nd on" data-i="0"></div>
+  <div class="nd" data-i="1"></div>
+  <div class="nd" data-i="2"></div>
+  <div class="nd" data-i="3"></div>
+  <div class="nd" data-i="4"></div>
+  <div class="nd" data-i="5"></div>
+</div>
+
+<!-- ════════ OPENING ════════ -->
+<section id="sc-open" class="sc">
+  <div class="grain"></div>
+  <div class="stars"></div>
+  <div class="op-tag">Part II · Sirf Tumhare Liye</div>
+  <h1 class="op-title">Aur Ek Baar…</h1>
+  <p class="op-sub">
+    "Ek kahani jo pehle se shuru thi —<br>
+    Yeh uska aagla safha hai, Anjali." 🌹
+  </p>
+  <div class="op-scroll">
+    <span>NEECHE AAO</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ════════ SCENE 1: PHONE CALL ════════ -->
+<section id="sc-call" class="sc">
+  <div class="grain" style="opacity:.02"></div>
+  <span class="sc-lbl rev">Game I · Incoming</span>
+  <h2 class="sc-ttl rev">Ek Zaruri Call 📞</h2>
+
+  <div class="phone-screen rev" id="phone-screen">
+    <div class="phone-notch"></div>
+    <div class="call-status" id="call-status">Incoming Call…</div>
+    <div class="call-avatar" id="call-avatar">💕</div>
+    <div class="call-name">Tumhara Dil</div>
+    <div class="call-sub" id="call-sub-txt">Ringing…</div>
+    <div class="call-wave" id="call-wave">
+      <div class="cw" style="--d:.6s"></div>
+      <div class="cw" style="--d:.8s"></div>
+      <div class="cw" style="--d:.5s"></div>
+      <div class="cw" style="--d:.9s"></div>
+      <div class="cw" style="--d:.7s"></div>
+      <div class="cw" style="--d:.6s"></div>
+      <div class="cw" style="--d:.8s"></div>
+    </div>
+    <!-- Buttons -->
+    <div class="call-btns" id="call-btns">
+      <div style="text-align:center">
+        <button class="cb dec" id="btn-dec">📵</button>
+        <div style="font-size:.62rem;color:rgba(255,255,255,.3);margin-top:5px">Decline</div>
+      </div>
+      <div style="text-align:center">
+        <button class="cb ans" id="btn-ans">📞</button>
+        <div style="font-size:.62rem;color:rgba(255,255,255,.3);margin-top:5px">Answer</div>
+      </div>
+    </div>
+    <!-- Declined state -->
+    <div id="call-declined" style="display:none;flex-direction:column;align-items:center;gap:10px;text-align:center">
+      <div class="cd-emoji">😢</div>
+      <div class="cd-msg" id="dec-msg">Calling again… thoda toh uthao 🥺</div>
+    </div>
+    <!-- Answered state -->
+    <div id="call-msg">
+      <div class="cm-typing" id="typing-dots">
+        <div class="ct-dot"></div><div class="ct-dot"></div><div class="ct-dot"></div>
+      </div>
+      <div class="cm-text" id="cm-text"></div>
+      <span class="cm-heart" id="cm-heart" style="display:none">❤️</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SCENE 2: SYRINGE ════════ -->
+<section id="sc-syringe" class="sc">
+  <div class="grain" style="opacity:.02"></div>
+  <span class="sc-lbl rev">Game II · Love Injection</span>
+  <h2 class="sc-ttl rev">Dose of Love 💉</h2>
+
+  <div class="rx-label-top rev">💊 Patient: Anjali &nbsp;|&nbsp; Medication: Pure Pyaar 100mg &nbsp;|&nbsp; Dosage: Lifetime</div>
+
+  <div id="syringe-main" style="display:flex;flex-direction:column;align-items:center;gap:clamp(14px,2.5vh,22px);width:100%;max-width:400px">
+    <!-- Syringe SVG -->
+    <div class="syringe-wrap rev" id="syringe-wrap" onclick="clickSyringe()">
+      <svg id="syringe-svg" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+        <!-- Needle -->
+        <line x1="12" y1="60" x2="55" y2="60" stroke="#aaa" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="55,54 55,66 68,60" fill="#ccc"/>
+        <!-- Barrel -->
+        <rect x="68" y="40" width="170" height="40" rx="6" fill="rgba(255,255,255,0.08)" stroke="rgba(232,51,109,0.4)" stroke-width="1.5"/>
+        <!-- Liquid fill (clipped) -->
+        <defs>
+          <clipPath id="barrel-clip">
+            <rect id="barrel-clip-rect" x="69" y="41" width="0" height="38" rx="5"/>
+          </clipPath>
+        </defs>
+        <rect x="69" y="41" width="168" height="38" rx="5" fill="url(#liquid-grad)" clip-path="url(#barrel-clip)"/>
+        <defs>
+          <linearGradient id="liquid-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#e8336d;stop-opacity:0.9"/>
+            <stop offset="100%" style="stop-color:#f0c060;stop-opacity:0.9"/>
+          </linearGradient>
+        </defs>
+        <!-- Barrel markings -->
+        <line x1="110" y1="41" x2="110" y2="51" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+        <line x1="152" y1="41" x2="152" y2="51" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+        <line x1="194" y1="41" x2="194" y2="51" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+        <!-- Plunger -->
+        <rect id="plunger" x="232" y="35" width="14" height="50" rx="4" fill="rgba(232,51,109,.6)" stroke="rgba(232,51,109,.8)" stroke-width="1"/>
+        <rect x="238" y="25" width="10" height="14" rx="3" fill="rgba(232,51,109,.4)" stroke="rgba(232,51,109,.6)" stroke-width="1"/>
+        <!-- Flange -->
+        <rect x="234" y="76" width="10" height="16" rx="2" fill="rgba(255,255,255,.15)"/>
+        <!-- Label on barrel -->
+        <text x="152" y="67" text-anchor="middle" fill="rgba(255,255,255,.35)" font-size="9" font-family="serif" font-style="italic">Pure Pyaar ♥</text>
+      </svg>
+    </div>
+
+    <div class="syringe-pct rev" id="syr-pct">0%</div>
+    <div class="syringe-status rev" id="syr-status">Tap the syringe to inject love 💉</div>
+    <div class="syringe-progress rev"><div class="sp-fill" id="sp-fill"></div></div>
+    <div class="syringe-tap rev" id="syr-tap">TAP TO INJECT ↑</div>
+  </div>
+
+  <div id="syringe-done" style="display:none;flex-direction:column;align-items:center;gap:16px">
+    <div class="sd-stamp">✅</div>
+    <div class="sd-title">Full Dose Administered!</div>
+    <div class="sd-msg">
+      "Side effects: Permanent happiness, uncontrollable smiling,<br>
+      and an inability to stop thinking about Arvind. 😄<br><br>
+      <em>No antidote available. Patient is officially doomed.</em> 💉❤️"
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SCENE 3: FIND HEARTS ════════ -->
+<section id="sc-hearts" class="sc">
+  <div class="grain" style="opacity:.02"></div>
+  <span class="sc-lbl rev">Game III · Search Karo</span>
+  <h2 class="sc-ttl rev">Find the Hidden Hearts 🔍</h2>
+
+  <div class="hf-instruction rev">10 chhupe hue dil hain is page mein —<br>Dhundh lo sab ko, phir ek khaas baat bataunga 🥺</div>
+  <div class="heart-counter rev" id="h-counter">💖 0 / 10 found</div>
+  <div class="heart-field rev" id="heart-field"></div>
+
+  <div id="hearts-done" style="display:none;flex-direction:column;align-items:center;gap:16px;max-width:500px;text-align:center;margin-top:20px">
+    <div style="font-size:3rem;animation:beat 1s infinite">💖</div>
+    <div class="hd-quote">
+      "Tu dhoondh leti hai <span>khushi</span> har jagah —<br>
+      yahi toh main tumse <span>seekhna</span> chahta hoon.<br><br>
+      Anjali, tum sirf doctor nahi ho —<br>
+      tum <span>woh roshni</span> ho jo mere andheron mein aa gayi." 🌟
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SCENE 4: FLIP CARDS ════════ -->
+<section id="sc-flip" class="sc">
+  <div class="grain" style="opacity:.02"></div>
+  <span class="sc-lbl rev">Chapter VI · Dil Ki Baat</span>
+  <h2 class="sc-ttl rev">Things I Love About You 🃏</h2>
+  <p style="font-size:clamp(.8rem,2.2vw,.92rem);color:var(--petal);font-style:italic;text-align:center;margin-bottom:clamp(16px,2.5vh,24px);max-width:420px" class="rev">Har card ulto — main wait kar raha hoon 😊</p>
+
+  <div class="flip-grid" id="flip-grid"></div>
+
+  <div id="flip-done" style="display:none;flex-direction:column;align-items:center;gap:14px;max-width:500px;margin-top:24px">
+    <div style="font-size:2.5rem">🥺</div>
+    <div class="fd-quote">
+      "Yeh sab padh ke ek cheez samajh aaya —<br>
+      Main tumse pyaar nahi karta, Anjali.<br>
+      Main tumse <span>bahut zyada pyaar karta hoon.</span><br>
+      Itna, jo likhne se bhi poora nahi hota." 💖
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SCENE 5: SHAYARIS ════════ -->
+<section id="sc-shayari" class="sc">
+  <div class="grain" style="opacity:.02"></div>
+  <span class="sc-lbl rev">Chapter VII · Sirf Tumhare Liye</span>
+  <h2 class="sc-ttl rev">Anjali Ke Naam 📜</h2>
+  <div class="psh-stage" id="psh-stage"></div>
+</section>
+
+<!-- ════════ SCENE 6: FINALE ════════ -->
+<section id="sc-finale" class="sc">
+  <div class="grain" style="opacity:.02"></div>
+  <div class="fin-stars"></div>
+  <span class="fin-heart" id="fin-heart" onclick="finalBurst()">❤️</span>
+  <h2 class="fin-title rev">Hamesha,<br>Anjali.</h2>
+  <div class="fin-shayari rev">
+    तुम्हारे बिना यह दिन अधूरा है —<br>
+    <span class="name">Anjali</span>, तुम मेरी दुआ हो, मेरी धड़कन हो।<br>
+    जो कहा नहीं जाता, वो सब तुम्हारे लिए है —<br>
+    हर ख़ामोशी में भी, बस तुम्हारा नाम है।
+  </div>
+  <div class="fin-cert rev">
+    Part I se Part II tak — <strong>Tu Meri Hai</strong> 💖<br>
+    <small>Certified: Tumhara Wala Arvind 🥀 · Always &amp; Forever</small>
+  </div>
+</section>
+
+<script>
+/* ════ DATA ════ */
+const SCENES=['sc-open','sc-call','sc-syringe','sc-hearts','sc-flip','sc-finale'];
+
+const FLIP_DATA=[
+  {icon:'😊',hint:'Woh moment…',text:'"Oh oh" — jab tum yeh bolti ho, mera din ban jaata hai',num:'01'},
+  {icon:'🥺',hint:'Woh request…',text:'"Suniye na" — teen words, aur main sab kuch chhodke sun leta hoon',num:'02'},
+  {icon:'😂',hint:'Woh awaaz…',text:'Tumhari hansi — ek baar sun lo, phir kuch aur sunne ka mann nahi karta',num:'03'},
+  {icon:'💬',hint:'Woh baat…',text:'Jab tum bahut zyada bolne lagti ho — woh waqt mujhe sabse zyada pasand hai',num:'04'},
+  {icon:'🩺',hint:'Woh choice…',text:'Tumne doctor banna chuna — logo ko theek karna — yeh tum hi kar sakti thi',num:'05'},
+  {icon:'📞',hint:'Woh raat…',text:'9 January, pehli call — us din se neend thodi kam ho gayi hai',num:'06'},
+  {icon:'✨',hint:'Woh feeling…',text:'Jab tum kamre mein aayi thi — sab slow motion ho gaya tha, sach mein',num:'07'},
+  {icon:'💖',hint:'Woh haan…',text:'Usne YES click kiya — aur mere liye duniya badal gayi',num:'08'},
+];
+
+const SHAYARIS=[
+  {
+    hi:`<span class="name">Anjali</span>… yeh naam lene se pehle\nek baar sochna padta hai —\nkyunki ek baar liya toh\ndil kuch aur sochna band kar deta hai।`,
+    ro:`<span class="name">Anjali</span>… yeh naam lene se pehle\nek baar sochna padta hai —\nkyunki ek baar liya toh\ndil kuch aur sochna band kar deta hai.`,
+    n:"01"
+  },
+  {
+    hi:`तुम बोलती हो "सुनिए ना" —\nऔर मैं पूरी दुनिया रोक देता हूँ,\nक्योंकि <span class="name">अंजलि</span> की बात सुनने के लिए\nबाकी सब इंतज़ार कर सकता है।`,
+    ro:`Tum bolti ho "suniye na" —\naur main poori duniya rok deta hoon,\nkyunki <span class="name">Anjali</span> ki baat sunne ke liye\nbaaki sab intezaar kar sakta hai.`,
+    n:"02"
+  },
+  {
+    hi:`<span class="name">अंजलि</span>, तुम्हारी हँसी सुनकर लगता है —\nदुनिया में कोई ग़म नहीं,\nकोई दूरी नहीं,\nबस यही एक लम्हा काफ़ी है।`,
+    ro:`<span class="name">Anjali</span>, tumhari hansi sunkar lagta hai —\nduniya mein koi gham nahi,\nkoi doori nahi,\nbas yahi ek lamha kaafi hai.`,
+    n:"03"
+  },
+  {
+    hi:`जब तुम बहुत बोलती हो —\nमैं चुप रहता हूँ,\nइसलिए नहीं कि मुझे कुछ कहना नहीं,\nबल्कि इसलिए कि <span class="name">तुम्हारी आवाज़</span>\nमेरी सबसे पसंदीदा धुन है।`,
+    ro:`Jab tum bahut bolti ho —\nmain chup rehta hoon,\nisliye nahi ki mujhe kuch kehna nahi,\nbalki isliye ki <span class="name">tumhari awaaz</span>\nmeri sabse pasandeeda dhun hai.`,
+    n:"04"
+  },
+];
+
+/* ════ CURSOR ════ */
+const CU=document.getElementById('cursor'),CR=document.getElementById('cur-ring');
+let mx=0,my=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;CU.style.left=mx+'px';CU.style.top=my+'px'});
+setInterval(()=>{CR.style.left=mx+'px';CR.style.top=my+'px'},60);
+
+/* ════ HEARTS CANVAS ════ */
+const HC=document.getElementById('h-canvas'),HX=HC.getContext('2d');
+let hearts=[];
+function rsH(){HC.width=window.innerWidth;HC.height=window.innerHeight}rsH();
+window.addEventListener('resize',rsH);
+class H{constructor(x,y,s){this.x=x;this.y=y;this.s=s||(Math.random()*18+7);this.c=['#e8336d','#ff4081','#f06292','#ffb3cb','#ff1744'][0|Math.random()*5];this.vx=(Math.random()-.5)*5.5;this.vy=-(Math.random()*5+3);this.a=1;this.r=0;this.rv=(Math.random()-.5)*.05}
+up(){this.x+=this.vx;this.y+=this.vy;this.vy+=.09;this.a-=.013;this.r+=this.rv}
+dr(){HX.save();HX.globalAlpha=Math.max(0,this.a);HX.translate(this.x,this.y);HX.rotate(this.r);HX.fillStyle=this.c;const s=this.s;HX.beginPath();HX.moveTo(0,s*.35);HX.bezierCurveTo(0,0,-s*.5,0,-s*.5,s*.35);HX.bezierCurveTo(-s*.5,s*.7,0,s,0,s*1.1);HX.bezierCurveTo(0,s,s*.5,s*.7,s*.5,s*.35);HX.bezierCurveTo(s*.5,0,0,0,0,s*.35);HX.fill();HX.restore()}}
+function burst(x,y,n){for(let i=0;i<(n||13);i++)hearts.push(new H(x,y))}
+(function ah(){HX.clearRect(0,0,HC.width,HC.height);hearts=hearts.filter(h=>h.a>0);hearts.forEach(h=>{h.up();h.dr()});requestAnimationFrame(ah)})();
+document.addEventListener('click',e=>burst(e.clientX,e.clientY,8));
+
+/* ════ CONFETTI ════ */
+const CC=document.getElementById('cf-canvas'),CX=CC.getContext('2d');
+let cfs=[],cfGo=false;
+function rsC(){CC.width=window.innerWidth;CC.height=window.innerHeight}rsC();window.addEventListener('resize',rsC);
+const CFC=['#e8336d','#f0c060','#a8e6cf','#ffb3cb','#fff','#ff4081'];
+class CF{constructor(){this.x=Math.random()*CC.width;this.y=-10;this.s=Math.random()*8+3;this.c=CFC[0|Math.random()*CFC.length];this.vx=(Math.random()-.5)*4;this.vy=Math.random()*4+2;this.r=Math.random()*360;this.rv=(Math.random()-.5)*7;this.a=1;this.ci=Math.random()>.5}
+up(){this.x+=this.vx;this.y+=this.vy;this.r+=this.rv;this.a-=.007}
+dr(){CX.save();CX.globalAlpha=Math.max(0,this.a);CX.translate(this.x,this.y);CX.rotate(this.r*Math.PI/180);CX.fillStyle=this.c;this.ci?CX.fillRect(-this.s/2,-this.s/2,this.s,this.s*1.5):(CX.beginPath(),CX.arc(0,0,this.s/2,0,Math.PI*2),CX.fill());CX.restore()}}
+function launchCF(){CC.style.display='block';cfGo=true;for(let i=0;i<200;i++)setTimeout(()=>cfs.push(new CF()),Math.random()*2200);function r(){CX.clearRect(0,0,CC.width,CC.height);cfs=cfs.filter(c=>c.a>0);cfs.forEach(c=>{c.up();c.dr()});if(cfGo)requestAnimationFrame(r)}r();setTimeout(()=>{cfGo=false;CC.style.display='none'},7000)}
+
+/* ════ NAV DOTS ════ */
+const DOTS=document.querySelectorAll('.nd');
+function upDots(){let c=0;SCENES.forEach((id,i)=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<window.innerHeight*.6)c=i});DOTS.forEach((d,i)=>d.classList.toggle('on',i===c))}
+DOTS.forEach(d=>d.addEventListener('click',()=>document.getElementById(SCENES[+d.dataset.i])?.scrollIntoView({behavior:'smooth'})));
+window.addEventListener('scroll',upDots,{passive:true});
+
+/* ════ REVEAL ════ */
+function checkRev(){document.querySelectorAll('.rev,.psh-block').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight*.9)el.classList.add('vis')});upDots()}
+window.addEventListener('scroll',checkRev,{passive:true});
+
+/* ════ PHONE CALL ════ */
+let decCount=0;
+const DECLINED_MSGS=[
+  "Calling again… thoda toh uthao 🥺",
+  "Seriously? Main tumhara dil bol raha hoon 😢",
+  "Theek hai… last try kar raha hoon 🥺💔",
+  "Uthao please… ek zaruri baat kehni hai ❤️"
+];
+
+document.getElementById('btn-dec').addEventListener('click',handleDecline);
+document.getElementById('btn-dec').addEventListener('touchend',e=>{e.preventDefault();handleDecline()});
+function handleDecline(){
+  if(decCount>=3){handleAnswer();return}
+  const btns=document.getElementById('call-btns');
+  const dec=document.getElementById('call-declined');
+  btns.style.display='none';
+  dec.style.display='flex';
+  document.getElementById('dec-msg').textContent=DECLINED_MSGS[decCount]||DECLINED_MSGS[0];
+  decCount++;
+  // Ring again after 1.5s
+  setTimeout(()=>{
+    dec.style.display='none';
+    btns.style.display='flex';
+    document.getElementById('call-status').textContent='Calling Again… 📞';
+  },1600);
+}
+
+document.getElementById('btn-ans').addEventListener('click',handleAnswer);
+document.getElementById('btn-ans').addEventListener('touchend',e=>{e.preventDefault();handleAnswer()});
+function handleAnswer(){
+  document.getElementById('call-btns').style.display='none';
+  document.getElementById('call-declined').style.display='none';
+  document.getElementById('call-wave').style.display='none';
+  document.getElementById('call-status').textContent='Connected ✅';
+  document.getElementById('call-sub-txt').textContent='Tumhara Dil';
+  document.getElementById('call-avatar').textContent='❤️';
+  const msg=document.getElementById('call-msg');
+  msg.style.display='block';
+  const TEXT="Maine call isliye kiya kyunki… tumse kehna tha jo likhne mein nahi aata.\n\nMain tumse bahut pyaar karta hoon, Anjali.\n\nHar 'Oh oh' ke liye, har 'Suniye na' ke liye, har us lamhe ke liye jab tum bahut bolti ho aur main sirf sun-ta rehna chahta hoon…\n\nTumhara. Hamesha.";
+  setTimeout(()=>{
+    document.getElementById('typing-dots').style.display='none';
+    typeText(document.getElementById('cm-text'),TEXT,()=>{
+      document.getElementById('cm-heart').style.display='block';
+      burst(window.innerWidth/2,window.innerHeight*.6,20);
+    },38);
+  },1400);
+}
+
+/* ════ SYRINGE CLICKER ════ */
+let syrPct=0,syrDone=false;
+const SYR_MSGS=["Injecting love... 💉","Pyaar ja raha hai... 💗","Dil bhar raha hai... ❤️","Almost there... 🥺","Sirf thoda aur... 💖","99%... 😄"];
+function clickSyringe(){
+  if(syrDone)return;
+  syrPct=Math.min(100,syrPct+(Math.random()*8+5));
+  // Update SVG plunger
+  const maxMove=168;
+  const plungerX=232-(syrPct/100)*maxMove*.65;
+  const clipW=(syrPct/100)*168;
+  document.getElementById('plunger').setAttribute('x',plungerX);
+  document.getElementById('barrel-clip-rect').setAttribute('width',clipW);
+  document.getElementById('sp-fill').style.width=syrPct+'%';
+  document.getElementById('syr-pct').textContent=Math.floor(syrPct)+'%';
+  const idx=Math.min(SYR_MSGS.length-1,Math.floor(syrPct/17));
+  document.getElementById('syr-status').textContent=SYR_MSGS[idx];
+  // Shake effect
+  const sw=document.getElementById('syringe-wrap');
+  sw.style.transform='translateX(3px)';setTimeout(()=>sw.style.transform='',100);
+  burst(window.innerWidth/2,window.innerHeight/2,4);
+  if(syrPct>=100){syrDone=true;completeSyringe()}
+}
+function completeSyringe(){
+  launchCF();
+  for(let i=0;i<5;i++)setTimeout(()=>burst(window.innerWidth/2,window.innerHeight/2,18),i*250);
+  setTimeout(()=>{
+    document.getElementById('syringe-main').style.transition='opacity .6s';
+    document.getElementById('syringe-main').style.opacity='0';
+    setTimeout(()=>{
+      document.getElementById('syringe-main').style.display='none';
+      const done=document.getElementById('syringe-done');
+      done.style.display='flex';done.style.opacity='0';done.style.transition='opacity .8s';
+      requestAnimationFrame(()=>requestAnimationFrame(()=>done.style.opacity='1'));
+    },650);
+  },400);
+}
+
+/* ════ FIND HEARTS ════ */
+let hFound=0;
+const HEART_POSITIONS=[
+  {top:'8%',left:'5%'},{top:'12%',left:'88%'},{top:'35%',left:'3%'},
+  {top:'28%',left:'75%'},{top:'55%',left:'15%'},{top:'62%',left:'82%'},
+  {top:'78%',left:'8%'},{top:'45%',left:'50%'},{top:'82%',left:'65%'},
+  {top:'18%',left:'45%'}
+];
+const HF=document.getElementById('heart-field');
+HEART_POSITIONS.forEach((pos,i)=>{
+  const h=document.createElement('div');h.className='hh';
+  h.style.top=pos.top;h.style.left=pos.left;
+  h.textContent=['💗','💖','❤️','💕','🌹','💓','💝','💘','♥️','💞'][i];
+  h.addEventListener('click',()=>foundHeart(h));
+  h.addEventListener('touchend',e=>{e.preventDefault();foundHeart(h)});
+  HF.appendChild(h);
+});
+function foundHeart(el){
+  if(el.classList.contains('found'))return;
+  el.classList.add('found');hFound++;
+  const t=el.getBoundingClientRect();
+  burst(t.left+t.width/2,t.top+t.height/2,10);
+  document.getElementById('h-counter').textContent=`💖 ${hFound} / 10 found`;
+  if(hFound===10){
+    setTimeout(()=>{
+      document.getElementById('hearts-done').style.display='flex';
+      document.getElementById('hearts-done').style.animation='fup .9s forwards';
+      for(let i=0;i<6;i++)setTimeout(()=>burst(Math.random()*window.innerWidth,Math.random()*window.innerHeight*.5,15),i*300);
+    },600);
+  }
+}
+
+/* ════ FLIP CARDS ════ */
+const FG=document.getElementById('flip-grid');
+let flipped=0;
+FLIP_DATA.forEach((d,i)=>{
+  const card=document.createElement('div');card.className='flip-card';
+  card.innerHTML=`<div class="flip-inner"><div class="flip-front"><div class="ff-icon">${d.icon}</div><div class="ff-hint">${d.hint}</div></div><div class="flip-back"><div class="fb-text">${d.text}</div><div class="fb-num">${d.num} / 08</div></div></div>`;
+  card.addEventListener('click',()=>flipCard(card));
+  card.addEventListener('touchend',e=>{e.preventDefault();flipCard(card)});
+  // Staggered reveal
+  card.style.opacity='0';card.style.transform='translateY(30px)';card.style.transition=`opacity .6s ${i*.08}s ease, transform .6s ${i*.08}s ease`;
+  FG.appendChild(card);
+  setTimeout(()=>{new IntersectionObserver(([e])=>{if(e.isIntersecting){card.style.opacity='1';card.style.transform='translateY(0)'}},{threshold:.2}).observe(card)},100);
+});
+function flipCard(card){
+  if(card.classList.contains('flipped'))return;
+  card.classList.add('flipped');
+  const t=card.getBoundingClientRect();
+  burst(t.left+t.width/2,t.top+t.height/2,8);
+  flipped++;
+  if(flipped===FLIP_DATA.length){
+    setTimeout(()=>{
+      const done=document.getElementById('flip-done');
+      done.style.display='flex';launchCF();
+      for(let i=0;i<4;i++)setTimeout(()=>burst(Math.random()*window.innerWidth,window.innerHeight*.5,15),i*350);
+    },800);
+  }
+}
+
+/* ════ SHAYARIS WITH TYPING ════ */
+const PSS=document.getElementById('psh-stage');
+SHAYARIS.forEach((s,i)=>{
+  const blk=document.createElement('div');blk.className='psh-block';
+  blk.innerHTML=`<div class="psh-card"><div class="psh-text" id="ph${i}"></div><div class="psh-hr"></div><div class="psh-ro" id="pr${i}"></div><div class="psh-n">${s.n} / 04</div></div>`;
+  PSS.appendChild(blk);
+  let done=false;
+  new IntersectionObserver(([e])=>{
+    if(e.isIntersecting&&!done){
+      done=true;blk.classList.add('vis');
+      // For HTML shayaris with spans, use innerHTML typing
+      typeHTML(document.getElementById('ph'+i),s.hi,()=>{
+        setTimeout(()=>typeHTML(document.getElementById('pr'+i),s.ro,null,22),400);
+      },32);
+    }
+  },{threshold:.3}).observe(blk);
+});
+
+/* ════ TYPE TEXT ════ */
+function typeText(el,text,cb,spd){
+  if(!el)return;el.textContent='';let i=0;spd=spd||34;
+  (function t(){if(i<text.length){el.innerHTML=text.slice(0,++i).replace(/\n/g,'<br>');setTimeout(t,spd)}else cb?.()})();
+}
+// typeHTML — renders spans inside typed content
+function typeHTML(el,html,cb,spd){
+  if(!el)return;
+  // Strip tags to get plain text length, then reveal full HTML at intervals
+  const plain=html.replace(/<[^>]+>/g,'');
+  const total=plain.length;spd=spd||32;let i=0;
+  el.innerHTML='';
+  (function t(){
+    if(i<=total){
+      // Calculate how much of the HTML to show based on plain-text progress
+      let count=0,out='',inTag=false;
+      for(let c=0;c<html.length;c++){
+        if(html[c]==='<')inTag=true;
+        if(inTag){out+=html[c]}
+        else{if(count<i){out+=html[c];count++}else break}
+        if(html[c]==='>'){inTag=false}
+      }
+      el.innerHTML=out.replace(/\n/g,'<br>');
+      i++;setTimeout(t,spd);
+    }else cb?.();
+  })();
+}
+
+/* ════ FINALE ════ */
+function finalBurst(){
+  launchCF();
+  for(let i=0;i<8;i++)setTimeout(()=>burst(Math.random()*window.innerWidth,Math.random()*window.innerHeight*.4,20),i*200);
+}
+
+/* ════ INIT ════ */
+checkRev();
+setTimeout(checkRev,600);
+</script>
+</body>
+</html>
